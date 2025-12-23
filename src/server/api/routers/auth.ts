@@ -60,12 +60,10 @@ export const authRouter = {
         select: { id: true },
       });
 
-      if (!user) {
-        user = await ctx.db.user.create({
-          data: { email },
-          select: { id: true },
-        });
-      }
+      user ??= await ctx.db.user.create({
+        data: { email },
+        select: { id: true },
+      });
 
       const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
