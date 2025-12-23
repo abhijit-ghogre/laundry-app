@@ -11,11 +11,76 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  loads     Load[]
+  sessions  Session[]
+  shops     Shop[]
+}
+
+model Shop {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   name      String
+  isDefault Boolean  @default(false)
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  loads     Load[]
 
-  @@index([name])
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model OtpToken {
+  id        String   @id @default(cuid())
+  email     String
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Load {
+  id          String     @id @default(cuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shopId      String
+  shop        Shop       @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  pickupDate  DateTime
+  isDelivered Boolean    @default(false)
+  deliveredAt DateTime?
+  items       LoadItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([shopId])
+}
+
+model LoadItem {
+  id        String @id @default(cuid())
+  loadId    String
+  load      Load   @relation(fields: [loadId], references: [id], onDelete: Cascade)
+  clothType String
+  rate      Float
+  count     Int
+
+  @@unique([loadId, clothType])
+  @@index([loadId])
 }
