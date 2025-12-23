@@ -32,12 +32,24 @@ export function Dashboard() {
           <h2 className="text-lg font-semibold text-slate-800">
             Your Laundry Loads
           </h2>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/analytics"
+              className="rounded-lg border border-slate-300 px-4 py-2 font-medium text-slate-600 transition hover:bg-slate-50"
+            >
+              Analytics
+            </Link>
+            <Link
+              href="/cloth-types"
+              className="rounded-lg border border-slate-300 px-4 py-2 font-medium text-slate-600 transition hover:bg-slate-50"
+            >
+              Cloth Types
+            </Link>
             <Link
               href="/shops"
               className="rounded-lg border border-slate-300 px-4 py-2 font-medium text-slate-600 transition hover:bg-slate-50"
             >
-              Manage Shops
+              Shops
             </Link>
             <Link
               href="/loads/new"

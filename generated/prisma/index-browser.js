@@ -128,6 +128,18 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ClothTypeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  ironRate: 'ironRate',
+  washRate: 'washRate',
+  dryCleanRate: 'dryCleanRate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ShopScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -157,6 +169,7 @@ exports.Prisma.LoadScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   shopId: 'shopId',
+  loadType: 'loadType',
   pickupDate: 'pickupDate',
   isDelivered: 'isDelivered',
   deliveredAt: 'deliveredAt',
@@ -186,10 +199,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.LoadType = exports.$Enums.LoadType = {
+  IRON: 'IRON',
+  WASH: 'WASH',
+  DRY_CLEAN: 'DRY_CLEAN'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
+  ClothType: 'ClothType',
   Shop: 'Shop',
   OtpToken: 'OtpToken',
   Session: 'Session',

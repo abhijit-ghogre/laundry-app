@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model ClothType
+ * 
+ */
+export type ClothType = $Result.DefaultSelection<Prisma.$ClothTypePayload>
+/**
  * Model Shop
  * 
  */
@@ -43,6 +48,24 @@ export type Load = $Result.DefaultSelection<Prisma.$LoadPayload>
  * 
  */
 export type LoadItem = $Result.DefaultSelection<Prisma.$LoadItemPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const LoadType: {
+  IRON: 'IRON',
+  WASH: 'WASH',
+  DRY_CLEAN: 'DRY_CLEAN'
+};
+
+export type LoadType = (typeof LoadType)[keyof typeof LoadType]
+
+}
+
+export type LoadType = $Enums.LoadType
+
+export const LoadType: typeof $Enums.LoadType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -171,6 +194,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clothType`: Exposes CRUD operations for the **ClothType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClothTypes
+    * const clothTypes = await prisma.clothType.findMany()
+    * ```
+    */
+  get clothType(): Prisma.ClothTypeDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.shop`: Exposes CRUD operations for the **Shop** model.
@@ -663,6 +696,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    ClothType: 'ClothType',
     Shop: 'Shop',
     OtpToken: 'OtpToken',
     Session: 'Session',
@@ -686,7 +720,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "shop" | "otpToken" | "session" | "load" | "loadItem"
+      modelProps: "user" | "clothType" | "shop" | "otpToken" | "session" | "load" | "loadItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -761,6 +795,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClothType: {
+        payload: Prisma.$ClothTypePayload<ExtArgs>
+        fields: Prisma.ClothTypeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClothTypeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClothTypeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>
+          }
+          findFirst: {
+            args: Prisma.ClothTypeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClothTypeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>
+          }
+          findMany: {
+            args: Prisma.ClothTypeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>[]
+          }
+          create: {
+            args: Prisma.ClothTypeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>
+          }
+          createMany: {
+            args: Prisma.ClothTypeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClothTypeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>[]
+          }
+          delete: {
+            args: Prisma.ClothTypeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>
+          }
+          update: {
+            args: Prisma.ClothTypeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>
+          }
+          deleteMany: {
+            args: Prisma.ClothTypeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClothTypeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClothTypeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>[]
+          }
+          upsert: {
+            args: Prisma.ClothTypeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClothTypePayload>
+          }
+          aggregate: {
+            args: Prisma.ClothTypeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClothType>
+          }
+          groupBy: {
+            args: Prisma.ClothTypeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClothTypeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClothTypeCountArgs<ExtArgs>
+            result: $Utils.Optional<ClothTypeCountAggregateOutputType> | number
           }
         }
       }
@@ -1231,6 +1339,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    clothType?: ClothTypeOmit
     shop?: ShopOmit
     otpToken?: OtpTokenOmit
     session?: SessionOmit
@@ -1319,12 +1428,14 @@ export namespace Prisma {
     loads: number
     sessions: number
     shops: number
+    clothTypes: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     loads?: boolean | UserCountOutputTypeCountLoadsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     shops?: boolean | UserCountOutputTypeCountShopsArgs
+    clothTypes?: boolean | UserCountOutputTypeCountClothTypesArgs
   }
 
   // Custom InputTypes
@@ -1357,6 +1468,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountShopsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ShopWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountClothTypesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClothTypeWhereInput
   }
 
 
@@ -1585,6 +1703,7 @@ export namespace Prisma {
     loads?: boolean | User$loadsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     shops?: boolean | User$shopsArgs<ExtArgs>
+    clothTypes?: boolean | User$clothTypesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1614,6 +1733,7 @@ export namespace Prisma {
     loads?: boolean | User$loadsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     shops?: boolean | User$shopsArgs<ExtArgs>
+    clothTypes?: boolean | User$clothTypesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1625,6 +1745,7 @@ export namespace Prisma {
       loads: Prisma.$LoadPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       shops: Prisma.$ShopPayload<ExtArgs>[]
+      clothTypes: Prisma.$ClothTypePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2028,6 +2149,7 @@ export namespace Prisma {
     loads<T extends User$loadsArgs<ExtArgs> = {}>(args?: Subset<T, User$loadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shops<T extends User$shopsArgs<ExtArgs> = {}>(args?: Subset<T, User$shopsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    clothTypes<T extends User$clothTypesArgs<ExtArgs> = {}>(args?: Subset<T, User$clothTypesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2521,6 +2643,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.clothTypes
+   */
+  export type User$clothTypesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    where?: ClothTypeWhereInput
+    orderBy?: ClothTypeOrderByWithRelationInput | ClothTypeOrderByWithRelationInput[]
+    cursor?: ClothTypeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClothTypeScalarFieldEnum | ClothTypeScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2536,6 +2682,1158 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClothType
+   */
+
+  export type AggregateClothType = {
+    _count: ClothTypeCountAggregateOutputType | null
+    _avg: ClothTypeAvgAggregateOutputType | null
+    _sum: ClothTypeSumAggregateOutputType | null
+    _min: ClothTypeMinAggregateOutputType | null
+    _max: ClothTypeMaxAggregateOutputType | null
+  }
+
+  export type ClothTypeAvgAggregateOutputType = {
+    ironRate: number | null
+    washRate: number | null
+    dryCleanRate: number | null
+  }
+
+  export type ClothTypeSumAggregateOutputType = {
+    ironRate: number | null
+    washRate: number | null
+    dryCleanRate: number | null
+  }
+
+  export type ClothTypeMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+    ironRate: number | null
+    washRate: number | null
+    dryCleanRate: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ClothTypeMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+    ironRate: number | null
+    washRate: number | null
+    dryCleanRate: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ClothTypeCountAggregateOutputType = {
+    id: number
+    userId: number
+    name: number
+    ironRate: number
+    washRate: number
+    dryCleanRate: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ClothTypeAvgAggregateInputType = {
+    ironRate?: true
+    washRate?: true
+    dryCleanRate?: true
+  }
+
+  export type ClothTypeSumAggregateInputType = {
+    ironRate?: true
+    washRate?: true
+    dryCleanRate?: true
+  }
+
+  export type ClothTypeMinAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    ironRate?: true
+    washRate?: true
+    dryCleanRate?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ClothTypeMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    ironRate?: true
+    washRate?: true
+    dryCleanRate?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ClothTypeCountAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    ironRate?: true
+    washRate?: true
+    dryCleanRate?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ClothTypeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClothType to aggregate.
+     */
+    where?: ClothTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClothTypes to fetch.
+     */
+    orderBy?: ClothTypeOrderByWithRelationInput | ClothTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClothTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClothTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClothTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClothTypes
+    **/
+    _count?: true | ClothTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClothTypeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClothTypeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClothTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClothTypeMaxAggregateInputType
+  }
+
+  export type GetClothTypeAggregateType<T extends ClothTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateClothType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClothType[P]>
+      : GetScalarType<T[P], AggregateClothType[P]>
+  }
+
+
+
+
+  export type ClothTypeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClothTypeWhereInput
+    orderBy?: ClothTypeOrderByWithAggregationInput | ClothTypeOrderByWithAggregationInput[]
+    by: ClothTypeScalarFieldEnum[] | ClothTypeScalarFieldEnum
+    having?: ClothTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClothTypeCountAggregateInputType | true
+    _avg?: ClothTypeAvgAggregateInputType
+    _sum?: ClothTypeSumAggregateInputType
+    _min?: ClothTypeMinAggregateInputType
+    _max?: ClothTypeMaxAggregateInputType
+  }
+
+  export type ClothTypeGroupByOutputType = {
+    id: string
+    userId: string
+    name: string
+    ironRate: number
+    washRate: number
+    dryCleanRate: number
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: ClothTypeCountAggregateOutputType | null
+    _avg: ClothTypeAvgAggregateOutputType | null
+    _sum: ClothTypeSumAggregateOutputType | null
+    _min: ClothTypeMinAggregateOutputType | null
+    _max: ClothTypeMaxAggregateOutputType | null
+  }
+
+  type GetClothTypeGroupByPayload<T extends ClothTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClothTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClothTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClothTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], ClothTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClothTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ironRate?: boolean
+    washRate?: boolean
+    dryCleanRate?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clothType"]>
+
+  export type ClothTypeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ironRate?: boolean
+    washRate?: boolean
+    dryCleanRate?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clothType"]>
+
+  export type ClothTypeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ironRate?: boolean
+    washRate?: boolean
+    dryCleanRate?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clothType"]>
+
+  export type ClothTypeSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ironRate?: boolean
+    washRate?: boolean
+    dryCleanRate?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ClothTypeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "ironRate" | "washRate" | "dryCleanRate" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["clothType"]>
+  export type ClothTypeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClothTypeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClothTypeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ClothTypePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClothType"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      name: string
+      ironRate: number
+      washRate: number
+      dryCleanRate: number
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["clothType"]>
+    composites: {}
+  }
+
+  type ClothTypeGetPayload<S extends boolean | null | undefined | ClothTypeDefaultArgs> = $Result.GetResult<Prisma.$ClothTypePayload, S>
+
+  type ClothTypeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClothTypeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClothTypeCountAggregateInputType | true
+    }
+
+  export interface ClothTypeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClothType'], meta: { name: 'ClothType' } }
+    /**
+     * Find zero or one ClothType that matches the filter.
+     * @param {ClothTypeFindUniqueArgs} args - Arguments to find a ClothType
+     * @example
+     * // Get one ClothType
+     * const clothType = await prisma.clothType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClothTypeFindUniqueArgs>(args: SelectSubset<T, ClothTypeFindUniqueArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClothType that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClothTypeFindUniqueOrThrowArgs} args - Arguments to find a ClothType
+     * @example
+     * // Get one ClothType
+     * const clothType = await prisma.clothType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClothTypeFindUniqueOrThrowArgs>(args: SelectSubset<T, ClothTypeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClothType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClothTypeFindFirstArgs} args - Arguments to find a ClothType
+     * @example
+     * // Get one ClothType
+     * const clothType = await prisma.clothType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClothTypeFindFirstArgs>(args?: SelectSubset<T, ClothTypeFindFirstArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClothType that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClothTypeFindFirstOrThrowArgs} args - Arguments to find a ClothType
+     * @example
+     * // Get one ClothType
+     * const clothType = await prisma.clothType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClothTypeFindFirstOrThrowArgs>(args?: SelectSubset<T, ClothTypeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClothTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClothTypeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClothTypes
+     * const clothTypes = await prisma.clothType.findMany()
+     * 
+     * // Get first 10 ClothTypes
+     * const clothTypes = await prisma.clothType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clothTypeWithIdOnly = await prisma.clothType.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClothTypeFindManyArgs>(args?: SelectSubset<T, ClothTypeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClothType.
+     * @param {ClothTypeCreateArgs} args - Arguments to create a ClothType.
+     * @example
+     * // Create one ClothType
+     * const ClothType = await prisma.clothType.create({
+     *   data: {
+     *     // ... data to create a ClothType
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClothTypeCreateArgs>(args: SelectSubset<T, ClothTypeCreateArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClothTypes.
+     * @param {ClothTypeCreateManyArgs} args - Arguments to create many ClothTypes.
+     * @example
+     * // Create many ClothTypes
+     * const clothType = await prisma.clothType.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClothTypeCreateManyArgs>(args?: SelectSubset<T, ClothTypeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClothTypes and returns the data saved in the database.
+     * @param {ClothTypeCreateManyAndReturnArgs} args - Arguments to create many ClothTypes.
+     * @example
+     * // Create many ClothTypes
+     * const clothType = await prisma.clothType.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClothTypes and only return the `id`
+     * const clothTypeWithIdOnly = await prisma.clothType.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClothTypeCreateManyAndReturnArgs>(args?: SelectSubset<T, ClothTypeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClothType.
+     * @param {ClothTypeDeleteArgs} args - Arguments to delete one ClothType.
+     * @example
+     * // Delete one ClothType
+     * const ClothType = await prisma.clothType.delete({
+     *   where: {
+     *     // ... filter to delete one ClothType
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClothTypeDeleteArgs>(args: SelectSubset<T, ClothTypeDeleteArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClothType.
+     * @param {ClothTypeUpdateArgs} args - Arguments to update one ClothType.
+     * @example
+     * // Update one ClothType
+     * const clothType = await prisma.clothType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClothTypeUpdateArgs>(args: SelectSubset<T, ClothTypeUpdateArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClothTypes.
+     * @param {ClothTypeDeleteManyArgs} args - Arguments to filter ClothTypes to delete.
+     * @example
+     * // Delete a few ClothTypes
+     * const { count } = await prisma.clothType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClothTypeDeleteManyArgs>(args?: SelectSubset<T, ClothTypeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClothTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClothTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClothTypes
+     * const clothType = await prisma.clothType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClothTypeUpdateManyArgs>(args: SelectSubset<T, ClothTypeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClothTypes and returns the data updated in the database.
+     * @param {ClothTypeUpdateManyAndReturnArgs} args - Arguments to update many ClothTypes.
+     * @example
+     * // Update many ClothTypes
+     * const clothType = await prisma.clothType.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClothTypes and only return the `id`
+     * const clothTypeWithIdOnly = await prisma.clothType.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClothTypeUpdateManyAndReturnArgs>(args: SelectSubset<T, ClothTypeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClothType.
+     * @param {ClothTypeUpsertArgs} args - Arguments to update or create a ClothType.
+     * @example
+     * // Update or create a ClothType
+     * const clothType = await prisma.clothType.upsert({
+     *   create: {
+     *     // ... data to create a ClothType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClothType we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClothTypeUpsertArgs>(args: SelectSubset<T, ClothTypeUpsertArgs<ExtArgs>>): Prisma__ClothTypeClient<$Result.GetResult<Prisma.$ClothTypePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClothTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClothTypeCountArgs} args - Arguments to filter ClothTypes to count.
+     * @example
+     * // Count the number of ClothTypes
+     * const count = await prisma.clothType.count({
+     *   where: {
+     *     // ... the filter for the ClothTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClothTypeCountArgs>(
+      args?: Subset<T, ClothTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClothTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClothType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClothTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClothTypeAggregateArgs>(args: Subset<T, ClothTypeAggregateArgs>): Prisma.PrismaPromise<GetClothTypeAggregateType<T>>
+
+    /**
+     * Group by ClothType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClothTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClothTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClothTypeGroupByArgs['orderBy'] }
+        : { orderBy?: ClothTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClothTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClothTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClothType model
+   */
+  readonly fields: ClothTypeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClothType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClothTypeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClothType model
+   */
+  interface ClothTypeFieldRefs {
+    readonly id: FieldRef<"ClothType", 'String'>
+    readonly userId: FieldRef<"ClothType", 'String'>
+    readonly name: FieldRef<"ClothType", 'String'>
+    readonly ironRate: FieldRef<"ClothType", 'Float'>
+    readonly washRate: FieldRef<"ClothType", 'Float'>
+    readonly dryCleanRate: FieldRef<"ClothType", 'Float'>
+    readonly isActive: FieldRef<"ClothType", 'Boolean'>
+    readonly createdAt: FieldRef<"ClothType", 'DateTime'>
+    readonly updatedAt: FieldRef<"ClothType", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClothType findUnique
+   */
+  export type ClothTypeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ClothType to fetch.
+     */
+    where: ClothTypeWhereUniqueInput
+  }
+
+  /**
+   * ClothType findUniqueOrThrow
+   */
+  export type ClothTypeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ClothType to fetch.
+     */
+    where: ClothTypeWhereUniqueInput
+  }
+
+  /**
+   * ClothType findFirst
+   */
+  export type ClothTypeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ClothType to fetch.
+     */
+    where?: ClothTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClothTypes to fetch.
+     */
+    orderBy?: ClothTypeOrderByWithRelationInput | ClothTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClothTypes.
+     */
+    cursor?: ClothTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClothTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClothTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClothTypes.
+     */
+    distinct?: ClothTypeScalarFieldEnum | ClothTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ClothType findFirstOrThrow
+   */
+  export type ClothTypeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ClothType to fetch.
+     */
+    where?: ClothTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClothTypes to fetch.
+     */
+    orderBy?: ClothTypeOrderByWithRelationInput | ClothTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClothTypes.
+     */
+    cursor?: ClothTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClothTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClothTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClothTypes.
+     */
+    distinct?: ClothTypeScalarFieldEnum | ClothTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ClothType findMany
+   */
+  export type ClothTypeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ClothTypes to fetch.
+     */
+    where?: ClothTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClothTypes to fetch.
+     */
+    orderBy?: ClothTypeOrderByWithRelationInput | ClothTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClothTypes.
+     */
+    cursor?: ClothTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClothTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClothTypes.
+     */
+    skip?: number
+    distinct?: ClothTypeScalarFieldEnum | ClothTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ClothType create
+   */
+  export type ClothTypeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClothType.
+     */
+    data: XOR<ClothTypeCreateInput, ClothTypeUncheckedCreateInput>
+  }
+
+  /**
+   * ClothType createMany
+   */
+  export type ClothTypeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClothTypes.
+     */
+    data: ClothTypeCreateManyInput | ClothTypeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClothType createManyAndReturn
+   */
+  export type ClothTypeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClothTypes.
+     */
+    data: ClothTypeCreateManyInput | ClothTypeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClothType update
+   */
+  export type ClothTypeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClothType.
+     */
+    data: XOR<ClothTypeUpdateInput, ClothTypeUncheckedUpdateInput>
+    /**
+     * Choose, which ClothType to update.
+     */
+    where: ClothTypeWhereUniqueInput
+  }
+
+  /**
+   * ClothType updateMany
+   */
+  export type ClothTypeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClothTypes.
+     */
+    data: XOR<ClothTypeUpdateManyMutationInput, ClothTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which ClothTypes to update
+     */
+    where?: ClothTypeWhereInput
+    /**
+     * Limit how many ClothTypes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClothType updateManyAndReturn
+   */
+  export type ClothTypeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * The data used to update ClothTypes.
+     */
+    data: XOR<ClothTypeUpdateManyMutationInput, ClothTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which ClothTypes to update
+     */
+    where?: ClothTypeWhereInput
+    /**
+     * Limit how many ClothTypes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClothType upsert
+   */
+  export type ClothTypeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClothType to update in case it exists.
+     */
+    where: ClothTypeWhereUniqueInput
+    /**
+     * In case the ClothType found by the `where` argument doesn't exist, create a new ClothType with this data.
+     */
+    create: XOR<ClothTypeCreateInput, ClothTypeUncheckedCreateInput>
+    /**
+     * In case the ClothType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClothTypeUpdateInput, ClothTypeUncheckedUpdateInput>
+  }
+
+  /**
+   * ClothType delete
+   */
+  export type ClothTypeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
+    /**
+     * Filter which ClothType to delete.
+     */
+    where: ClothTypeWhereUniqueInput
+  }
+
+  /**
+   * ClothType deleteMany
+   */
+  export type ClothTypeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClothTypes to delete
+     */
+    where?: ClothTypeWhereInput
+    /**
+     * Limit how many ClothTypes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClothType without action
+   */
+  export type ClothTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClothType
+     */
+    select?: ClothTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClothType
+     */
+    omit?: ClothTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClothTypeInclude<ExtArgs> | null
   }
 
 
@@ -5707,6 +7005,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     shopId: string | null
+    loadType: $Enums.LoadType | null
     pickupDate: Date | null
     isDelivered: boolean | null
     deliveredAt: Date | null
@@ -5718,6 +7017,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     shopId: string | null
+    loadType: $Enums.LoadType | null
     pickupDate: Date | null
     isDelivered: boolean | null
     deliveredAt: Date | null
@@ -5729,6 +7029,7 @@ export namespace Prisma {
     id: number
     userId: number
     shopId: number
+    loadType: number
     pickupDate: number
     isDelivered: number
     deliveredAt: number
@@ -5742,6 +7043,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     shopId?: true
+    loadType?: true
     pickupDate?: true
     isDelivered?: true
     deliveredAt?: true
@@ -5753,6 +7055,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     shopId?: true
+    loadType?: true
     pickupDate?: true
     isDelivered?: true
     deliveredAt?: true
@@ -5764,6 +7067,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     shopId?: true
+    loadType?: true
     pickupDate?: true
     isDelivered?: true
     deliveredAt?: true
@@ -5848,6 +7152,7 @@ export namespace Prisma {
     id: string
     userId: string
     shopId: string
+    loadType: $Enums.LoadType
     pickupDate: Date
     isDelivered: boolean
     deliveredAt: Date | null
@@ -5876,6 +7181,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     shopId?: boolean
+    loadType?: boolean
     pickupDate?: boolean
     isDelivered?: boolean
     deliveredAt?: boolean
@@ -5891,6 +7197,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     shopId?: boolean
+    loadType?: boolean
     pickupDate?: boolean
     isDelivered?: boolean
     deliveredAt?: boolean
@@ -5904,6 +7211,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     shopId?: boolean
+    loadType?: boolean
     pickupDate?: boolean
     isDelivered?: boolean
     deliveredAt?: boolean
@@ -5917,6 +7225,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     shopId?: boolean
+    loadType?: boolean
     pickupDate?: boolean
     isDelivered?: boolean
     deliveredAt?: boolean
@@ -5924,7 +7233,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type LoadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "shopId" | "pickupDate" | "isDelivered" | "deliveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["load"]>
+  export type LoadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "shopId" | "loadType" | "pickupDate" | "isDelivered" | "deliveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["load"]>
   export type LoadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     shop?: boolean | ShopDefaultArgs<ExtArgs>
@@ -5951,6 +7260,7 @@ export namespace Prisma {
       id: string
       userId: string
       shopId: string
+      loadType: $Enums.LoadType
       pickupDate: Date
       isDelivered: boolean
       deliveredAt: Date | null
@@ -6385,6 +7695,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Load", 'String'>
     readonly userId: FieldRef<"Load", 'String'>
     readonly shopId: FieldRef<"Load", 'String'>
+    readonly loadType: FieldRef<"Load", 'LoadType'>
     readonly pickupDate: FieldRef<"Load", 'DateTime'>
     readonly isDelivered: FieldRef<"Load", 'Boolean'>
     readonly deliveredAt: FieldRef<"Load", 'DateTime'>
@@ -7948,6 +9259,21 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ClothTypeScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    name: 'name',
+    ironRate: 'ironRate',
+    washRate: 'washRate',
+    dryCleanRate: 'dryCleanRate',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ClothTypeScalarFieldEnum = (typeof ClothTypeScalarFieldEnum)[keyof typeof ClothTypeScalarFieldEnum]
+
+
   export const ShopScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -7986,6 +9312,7 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     shopId: 'shopId',
+    loadType: 'loadType',
     pickupDate: 'pickupDate',
     isDelivered: 'isDelivered',
     deliveredAt: 'deliveredAt',
@@ -8065,13 +9392,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -8082,6 +9402,27 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'LoadType'
+   */
+  export type EnumLoadTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoadType'>
+    
+
+
+  /**
+   * Reference to a field of type 'LoadType[]'
+   */
+  export type ListEnumLoadTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoadType[]'>
     
 
 
@@ -8113,6 +9454,7 @@ export namespace Prisma {
     loads?: LoadListRelationFilter
     sessions?: SessionListRelationFilter
     shops?: ShopListRelationFilter
+    clothTypes?: ClothTypeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8123,6 +9465,7 @@ export namespace Prisma {
     loads?: LoadOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     shops?: ShopOrderByRelationAggregateInput
+    clothTypes?: ClothTypeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8136,6 +9479,7 @@ export namespace Prisma {
     loads?: LoadListRelationFilter
     sessions?: SessionListRelationFilter
     shops?: ShopListRelationFilter
+    clothTypes?: ClothTypeListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8156,6 +9500,84 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ClothTypeWhereInput = {
+    AND?: ClothTypeWhereInput | ClothTypeWhereInput[]
+    OR?: ClothTypeWhereInput[]
+    NOT?: ClothTypeWhereInput | ClothTypeWhereInput[]
+    id?: StringFilter<"ClothType"> | string
+    userId?: StringFilter<"ClothType"> | string
+    name?: StringFilter<"ClothType"> | string
+    ironRate?: FloatFilter<"ClothType"> | number
+    washRate?: FloatFilter<"ClothType"> | number
+    dryCleanRate?: FloatFilter<"ClothType"> | number
+    isActive?: BoolFilter<"ClothType"> | boolean
+    createdAt?: DateTimeFilter<"ClothType"> | Date | string
+    updatedAt?: DateTimeFilter<"ClothType"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ClothTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ironRate?: SortOrder
+    washRate?: SortOrder
+    dryCleanRate?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ClothTypeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_name?: ClothTypeUserIdNameCompoundUniqueInput
+    AND?: ClothTypeWhereInput | ClothTypeWhereInput[]
+    OR?: ClothTypeWhereInput[]
+    NOT?: ClothTypeWhereInput | ClothTypeWhereInput[]
+    userId?: StringFilter<"ClothType"> | string
+    name?: StringFilter<"ClothType"> | string
+    ironRate?: FloatFilter<"ClothType"> | number
+    washRate?: FloatFilter<"ClothType"> | number
+    dryCleanRate?: FloatFilter<"ClothType"> | number
+    isActive?: BoolFilter<"ClothType"> | boolean
+    createdAt?: DateTimeFilter<"ClothType"> | Date | string
+    updatedAt?: DateTimeFilter<"ClothType"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_name">
+
+  export type ClothTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ironRate?: SortOrder
+    washRate?: SortOrder
+    dryCleanRate?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ClothTypeCountOrderByAggregateInput
+    _avg?: ClothTypeAvgOrderByAggregateInput
+    _max?: ClothTypeMaxOrderByAggregateInput
+    _min?: ClothTypeMinOrderByAggregateInput
+    _sum?: ClothTypeSumOrderByAggregateInput
+  }
+
+  export type ClothTypeScalarWhereWithAggregatesInput = {
+    AND?: ClothTypeScalarWhereWithAggregatesInput | ClothTypeScalarWhereWithAggregatesInput[]
+    OR?: ClothTypeScalarWhereWithAggregatesInput[]
+    NOT?: ClothTypeScalarWhereWithAggregatesInput | ClothTypeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ClothType"> | string
+    userId?: StringWithAggregatesFilter<"ClothType"> | string
+    name?: StringWithAggregatesFilter<"ClothType"> | string
+    ironRate?: FloatWithAggregatesFilter<"ClothType"> | number
+    washRate?: FloatWithAggregatesFilter<"ClothType"> | number
+    dryCleanRate?: FloatWithAggregatesFilter<"ClothType"> | number
+    isActive?: BoolWithAggregatesFilter<"ClothType"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"ClothType"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ClothType"> | Date | string
   }
 
   export type ShopWhereInput = {
@@ -8336,6 +9758,7 @@ export namespace Prisma {
     id?: StringFilter<"Load"> | string
     userId?: StringFilter<"Load"> | string
     shopId?: StringFilter<"Load"> | string
+    loadType?: EnumLoadTypeFilter<"Load"> | $Enums.LoadType
     pickupDate?: DateTimeFilter<"Load"> | Date | string
     isDelivered?: BoolFilter<"Load"> | boolean
     deliveredAt?: DateTimeNullableFilter<"Load"> | Date | string | null
@@ -8350,6 +9773,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     shopId?: SortOrder
+    loadType?: SortOrder
     pickupDate?: SortOrder
     isDelivered?: SortOrder
     deliveredAt?: SortOrderInput | SortOrder
@@ -8367,6 +9791,7 @@ export namespace Prisma {
     NOT?: LoadWhereInput | LoadWhereInput[]
     userId?: StringFilter<"Load"> | string
     shopId?: StringFilter<"Load"> | string
+    loadType?: EnumLoadTypeFilter<"Load"> | $Enums.LoadType
     pickupDate?: DateTimeFilter<"Load"> | Date | string
     isDelivered?: BoolFilter<"Load"> | boolean
     deliveredAt?: DateTimeNullableFilter<"Load"> | Date | string | null
@@ -8381,6 +9806,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     shopId?: SortOrder
+    loadType?: SortOrder
     pickupDate?: SortOrder
     isDelivered?: SortOrder
     deliveredAt?: SortOrderInput | SortOrder
@@ -8398,6 +9824,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Load"> | string
     userId?: StringWithAggregatesFilter<"Load"> | string
     shopId?: StringWithAggregatesFilter<"Load"> | string
+    loadType?: EnumLoadTypeWithAggregatesFilter<"Load"> | $Enums.LoadType
     pickupDate?: DateTimeWithAggregatesFilter<"Load"> | Date | string
     isDelivered?: BoolWithAggregatesFilter<"Load"> | boolean
     deliveredAt?: DateTimeNullableWithAggregatesFilter<"Load"> | Date | string | null
@@ -8471,6 +9898,7 @@ export namespace Prisma {
     loads?: LoadCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     shops?: ShopCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8481,6 +9909,7 @@ export namespace Prisma {
     loads?: LoadUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     shops?: ShopUncheckedCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -8491,6 +9920,7 @@ export namespace Prisma {
     loads?: LoadUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     shops?: ShopUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8501,6 +9931,7 @@ export namespace Prisma {
     loads?: LoadUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     shops?: ShopUncheckedUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8520,6 +9951,89 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClothTypeCreateInput = {
+    id?: string
+    name: string
+    ironRate?: number
+    washRate?: number
+    dryCleanRate?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutClothTypesInput
+  }
+
+  export type ClothTypeUncheckedCreateInput = {
+    id?: string
+    userId: string
+    name: string
+    ironRate?: number
+    washRate?: number
+    dryCleanRate?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ClothTypeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ironRate?: FloatFieldUpdateOperationsInput | number
+    washRate?: FloatFieldUpdateOperationsInput | number
+    dryCleanRate?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutClothTypesNestedInput
+  }
+
+  export type ClothTypeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ironRate?: FloatFieldUpdateOperationsInput | number
+    washRate?: FloatFieldUpdateOperationsInput | number
+    dryCleanRate?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClothTypeCreateManyInput = {
+    id?: string
+    userId: string
+    name: string
+    ironRate?: number
+    washRate?: number
+    dryCleanRate?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ClothTypeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ironRate?: FloatFieldUpdateOperationsInput | number
+    washRate?: FloatFieldUpdateOperationsInput | number
+    dryCleanRate?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClothTypeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ironRate?: FloatFieldUpdateOperationsInput | number
+    washRate?: FloatFieldUpdateOperationsInput | number
+    dryCleanRate?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8703,6 +10217,7 @@ export namespace Prisma {
 
   export type LoadCreateInput = {
     id?: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -8717,6 +10232,7 @@ export namespace Prisma {
     id?: string
     userId: string
     shopId: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -8727,6 +10243,7 @@ export namespace Prisma {
 
   export type LoadUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8741,6 +10258,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     shopId?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8753,6 +10271,7 @@ export namespace Prisma {
     id?: string
     userId: string
     shopId: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -8762,6 +10281,7 @@ export namespace Prisma {
 
   export type LoadUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8773,6 +10293,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     shopId?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8879,6 +10400,12 @@ export namespace Prisma {
     none?: ShopWhereInput
   }
 
+  export type ClothTypeListRelationFilter = {
+    every?: ClothTypeWhereInput
+    some?: ClothTypeWhereInput
+    none?: ClothTypeWhereInput
+  }
+
   export type LoadOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -8888,6 +10415,10 @@ export namespace Prisma {
   }
 
   export type ShopOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClothTypeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8944,6 +10475,17 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -8952,6 +10494,83 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type ClothTypeUserIdNameCompoundUniqueInput = {
+    userId: string
+    name: string
+  }
+
+  export type ClothTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ironRate?: SortOrder
+    washRate?: SortOrder
+    dryCleanRate?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ClothTypeAvgOrderByAggregateInput = {
+    ironRate?: SortOrder
+    washRate?: SortOrder
+    dryCleanRate?: SortOrder
+  }
+
+  export type ClothTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ironRate?: SortOrder
+    washRate?: SortOrder
+    dryCleanRate?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ClothTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ironRate?: SortOrder
+    washRate?: SortOrder
+    dryCleanRate?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ClothTypeSumOrderByAggregateInput = {
+    ironRate?: SortOrder
+    washRate?: SortOrder
+    dryCleanRate?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ShopUserIdNameCompoundUniqueInput = {
@@ -8987,14 +10606,6 @@ export namespace Prisma {
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type OtpTokenCountOrderByAggregateInput = {
@@ -9042,6 +10653,13 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type EnumLoadTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.LoadType | EnumLoadTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLoadTypeFilter<$PrismaModel> | $Enums.LoadType
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -9077,6 +10695,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     shopId?: SortOrder
+    loadType?: SortOrder
     pickupDate?: SortOrder
     isDelivered?: SortOrder
     deliveredAt?: SortOrder
@@ -9088,6 +10707,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     shopId?: SortOrder
+    loadType?: SortOrder
     pickupDate?: SortOrder
     isDelivered?: SortOrder
     deliveredAt?: SortOrder
@@ -9099,11 +10719,22 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     shopId?: SortOrder
+    loadType?: SortOrder
     pickupDate?: SortOrder
     isDelivered?: SortOrder
     deliveredAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumLoadTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LoadType | EnumLoadTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLoadTypeWithAggregatesFilter<$PrismaModel> | $Enums.LoadType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLoadTypeFilter<$PrismaModel>
+    _max?: NestedEnumLoadTypeFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -9118,17 +10749,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -9186,22 +10806,6 @@ export namespace Prisma {
     count?: SortOrder
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -9239,6 +10843,13 @@ export namespace Prisma {
     connect?: ShopWhereUniqueInput | ShopWhereUniqueInput[]
   }
 
+  export type ClothTypeCreateNestedManyWithoutUserInput = {
+    create?: XOR<ClothTypeCreateWithoutUserInput, ClothTypeUncheckedCreateWithoutUserInput> | ClothTypeCreateWithoutUserInput[] | ClothTypeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ClothTypeCreateOrConnectWithoutUserInput | ClothTypeCreateOrConnectWithoutUserInput[]
+    createMany?: ClothTypeCreateManyUserInputEnvelope
+    connect?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+  }
+
   export type LoadUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<LoadCreateWithoutUserInput, LoadUncheckedCreateWithoutUserInput> | LoadCreateWithoutUserInput[] | LoadUncheckedCreateWithoutUserInput[]
     connectOrCreate?: LoadCreateOrConnectWithoutUserInput | LoadCreateOrConnectWithoutUserInput[]
@@ -9258,6 +10869,13 @@ export namespace Prisma {
     connectOrCreate?: ShopCreateOrConnectWithoutUserInput | ShopCreateOrConnectWithoutUserInput[]
     createMany?: ShopCreateManyUserInputEnvelope
     connect?: ShopWhereUniqueInput | ShopWhereUniqueInput[]
+  }
+
+  export type ClothTypeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ClothTypeCreateWithoutUserInput, ClothTypeUncheckedCreateWithoutUserInput> | ClothTypeCreateWithoutUserInput[] | ClothTypeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ClothTypeCreateOrConnectWithoutUserInput | ClothTypeCreateOrConnectWithoutUserInput[]
+    createMany?: ClothTypeCreateManyUserInputEnvelope
+    connect?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -9310,6 +10928,20 @@ export namespace Prisma {
     deleteMany?: ShopScalarWhereInput | ShopScalarWhereInput[]
   }
 
+  export type ClothTypeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ClothTypeCreateWithoutUserInput, ClothTypeUncheckedCreateWithoutUserInput> | ClothTypeCreateWithoutUserInput[] | ClothTypeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ClothTypeCreateOrConnectWithoutUserInput | ClothTypeCreateOrConnectWithoutUserInput[]
+    upsert?: ClothTypeUpsertWithWhereUniqueWithoutUserInput | ClothTypeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ClothTypeCreateManyUserInputEnvelope
+    set?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    disconnect?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    delete?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    connect?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    update?: ClothTypeUpdateWithWhereUniqueWithoutUserInput | ClothTypeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ClothTypeUpdateManyWithWhereWithoutUserInput | ClothTypeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ClothTypeScalarWhereInput | ClothTypeScalarWhereInput[]
+  }
+
   export type LoadUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<LoadCreateWithoutUserInput, LoadUncheckedCreateWithoutUserInput> | LoadCreateWithoutUserInput[] | LoadUncheckedCreateWithoutUserInput[]
     connectOrCreate?: LoadCreateOrConnectWithoutUserInput | LoadCreateOrConnectWithoutUserInput[]
@@ -9352,6 +10984,46 @@ export namespace Prisma {
     deleteMany?: ShopScalarWhereInput | ShopScalarWhereInput[]
   }
 
+  export type ClothTypeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ClothTypeCreateWithoutUserInput, ClothTypeUncheckedCreateWithoutUserInput> | ClothTypeCreateWithoutUserInput[] | ClothTypeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ClothTypeCreateOrConnectWithoutUserInput | ClothTypeCreateOrConnectWithoutUserInput[]
+    upsert?: ClothTypeUpsertWithWhereUniqueWithoutUserInput | ClothTypeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ClothTypeCreateManyUserInputEnvelope
+    set?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    disconnect?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    delete?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    connect?: ClothTypeWhereUniqueInput | ClothTypeWhereUniqueInput[]
+    update?: ClothTypeUpdateWithWhereUniqueWithoutUserInput | ClothTypeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ClothTypeUpdateManyWithWhereWithoutUserInput | ClothTypeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ClothTypeScalarWhereInput | ClothTypeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutClothTypesInput = {
+    create?: XOR<UserCreateWithoutClothTypesInput, UserUncheckedCreateWithoutClothTypesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClothTypesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutClothTypesNestedInput = {
+    create?: XOR<UserCreateWithoutClothTypesInput, UserUncheckedCreateWithoutClothTypesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClothTypesInput
+    upsert?: UserUpsertWithoutClothTypesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClothTypesInput, UserUpdateWithoutClothTypesInput>, UserUncheckedUpdateWithoutClothTypesInput>
+  }
+
   export type UserCreateNestedOneWithoutShopsInput = {
     create?: XOR<UserCreateWithoutShopsInput, UserUncheckedCreateWithoutShopsInput>
     connectOrCreate?: UserCreateOrConnectWithoutShopsInput
@@ -9370,10 +11042,6 @@ export namespace Prisma {
     connectOrCreate?: LoadCreateOrConnectWithoutShopInput | LoadCreateOrConnectWithoutShopInput[]
     createMany?: LoadCreateManyShopInputEnvelope
     connect?: LoadWhereUniqueInput | LoadWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutShopsNestedInput = {
@@ -9452,6 +11120,10 @@ export namespace Prisma {
     connect?: LoadItemWhereUniqueInput | LoadItemWhereUniqueInput[]
   }
 
+  export type EnumLoadTypeFieldUpdateOperationsInput = {
+    set?: $Enums.LoadType
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -9504,14 +11176,6 @@ export namespace Prisma {
     create?: XOR<LoadCreateWithoutItemsInput, LoadUncheckedCreateWithoutItemsInput>
     connectOrCreate?: LoadCreateOrConnectWithoutItemsInput
     connect?: LoadWhereUniqueInput
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -9597,9 +11261,36 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -9608,6 +11299,13 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLoadTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.LoadType | EnumLoadTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLoadTypeFilter<$PrismaModel> | $Enums.LoadType
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -9619,6 +11317,16 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedEnumLoadTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LoadType | EnumLoadTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LoadType[] | ListEnumLoadTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLoadTypeWithAggregatesFilter<$PrismaModel> | $Enums.LoadType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLoadTypeFilter<$PrismaModel>
+    _max?: NestedEnumLoadTypeFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -9646,33 +11354,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -9691,6 +11372,7 @@ export namespace Prisma {
 
   export type LoadCreateWithoutUserInput = {
     id?: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -9703,6 +11385,7 @@ export namespace Prisma {
   export type LoadUncheckedCreateWithoutUserInput = {
     id?: string
     shopId: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -9773,6 +11456,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ClothTypeCreateWithoutUserInput = {
+    id?: string
+    name: string
+    ironRate?: number
+    washRate?: number
+    dryCleanRate?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ClothTypeUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    ironRate?: number
+    washRate?: number
+    dryCleanRate?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ClothTypeCreateOrConnectWithoutUserInput = {
+    where: ClothTypeWhereUniqueInput
+    create: XOR<ClothTypeCreateWithoutUserInput, ClothTypeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ClothTypeCreateManyUserInputEnvelope = {
+    data: ClothTypeCreateManyUserInput | ClothTypeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type LoadUpsertWithWhereUniqueWithoutUserInput = {
     where: LoadWhereUniqueInput
     update: XOR<LoadUpdateWithoutUserInput, LoadUncheckedUpdateWithoutUserInput>
@@ -9796,6 +11511,7 @@ export namespace Prisma {
     id?: StringFilter<"Load"> | string
     userId?: StringFilter<"Load"> | string
     shopId?: StringFilter<"Load"> | string
+    loadType?: EnumLoadTypeFilter<"Load"> | $Enums.LoadType
     pickupDate?: DateTimeFilter<"Load"> | Date | string
     isDelivered?: BoolFilter<"Load"> | boolean
     deliveredAt?: DateTimeNullableFilter<"Load"> | Date | string | null
@@ -9858,6 +11574,93 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Shop"> | Date | string
   }
 
+  export type ClothTypeUpsertWithWhereUniqueWithoutUserInput = {
+    where: ClothTypeWhereUniqueInput
+    update: XOR<ClothTypeUpdateWithoutUserInput, ClothTypeUncheckedUpdateWithoutUserInput>
+    create: XOR<ClothTypeCreateWithoutUserInput, ClothTypeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ClothTypeUpdateWithWhereUniqueWithoutUserInput = {
+    where: ClothTypeWhereUniqueInput
+    data: XOR<ClothTypeUpdateWithoutUserInput, ClothTypeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ClothTypeUpdateManyWithWhereWithoutUserInput = {
+    where: ClothTypeScalarWhereInput
+    data: XOR<ClothTypeUpdateManyMutationInput, ClothTypeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ClothTypeScalarWhereInput = {
+    AND?: ClothTypeScalarWhereInput | ClothTypeScalarWhereInput[]
+    OR?: ClothTypeScalarWhereInput[]
+    NOT?: ClothTypeScalarWhereInput | ClothTypeScalarWhereInput[]
+    id?: StringFilter<"ClothType"> | string
+    userId?: StringFilter<"ClothType"> | string
+    name?: StringFilter<"ClothType"> | string
+    ironRate?: FloatFilter<"ClothType"> | number
+    washRate?: FloatFilter<"ClothType"> | number
+    dryCleanRate?: FloatFilter<"ClothType"> | number
+    isActive?: BoolFilter<"ClothType"> | boolean
+    createdAt?: DateTimeFilter<"ClothType"> | Date | string
+    updatedAt?: DateTimeFilter<"ClothType"> | Date | string
+  }
+
+  export type UserCreateWithoutClothTypesInput = {
+    id?: string
+    email: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    loads?: LoadCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    shops?: ShopCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutClothTypesInput = {
+    id?: string
+    email: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    loads?: LoadUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    shops?: ShopUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutClothTypesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutClothTypesInput, UserUncheckedCreateWithoutClothTypesInput>
+  }
+
+  export type UserUpsertWithoutClothTypesInput = {
+    update: XOR<UserUpdateWithoutClothTypesInput, UserUncheckedUpdateWithoutClothTypesInput>
+    create: XOR<UserCreateWithoutClothTypesInput, UserUncheckedCreateWithoutClothTypesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutClothTypesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutClothTypesInput, UserUncheckedUpdateWithoutClothTypesInput>
+  }
+
+  export type UserUpdateWithoutClothTypesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loads?: LoadUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    shops?: ShopUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutClothTypesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loads?: LoadUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    shops?: ShopUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutShopsInput = {
     id?: string
     email: string
@@ -9865,6 +11668,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     loads?: LoadCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutShopsInput = {
@@ -9874,6 +11678,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     loads?: LoadUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutShopsInput = {
@@ -9883,6 +11688,7 @@ export namespace Prisma {
 
   export type LoadCreateWithoutShopInput = {
     id?: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -9895,6 +11701,7 @@ export namespace Prisma {
   export type LoadUncheckedCreateWithoutShopInput = {
     id?: string
     userId: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -9931,6 +11738,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loads?: LoadUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutShopsInput = {
@@ -9940,6 +11748,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loads?: LoadUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type LoadUpsertWithWhereUniqueWithoutShopInput = {
@@ -9965,6 +11774,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     loads?: LoadCreateNestedManyWithoutUserInput
     shops?: ShopCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -9974,6 +11784,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     loads?: LoadUncheckedCreateNestedManyWithoutUserInput
     shops?: ShopUncheckedCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -9999,6 +11810,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loads?: LoadUpdateManyWithoutUserNestedInput
     shops?: ShopUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -10008,6 +11820,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loads?: LoadUncheckedUpdateManyWithoutUserNestedInput
     shops?: ShopUncheckedUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutLoadsInput = {
@@ -10017,6 +11830,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     shops?: ShopCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLoadsInput = {
@@ -10026,6 +11840,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     shops?: ShopUncheckedCreateNestedManyWithoutUserInput
+    clothTypes?: ClothTypeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLoadsInput = {
@@ -10100,6 +11915,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     shops?: ShopUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLoadsInput = {
@@ -10109,6 +11925,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     shops?: ShopUncheckedUpdateManyWithoutUserNestedInput
+    clothTypes?: ClothTypeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ShopUpsertWithoutLoadsInput = {
@@ -10171,6 +11988,7 @@ export namespace Prisma {
 
   export type LoadCreateWithoutItemsInput = {
     id?: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -10184,6 +12002,7 @@ export namespace Prisma {
     id?: string
     userId: string
     shopId: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -10209,6 +12028,7 @@ export namespace Prisma {
 
   export type LoadUpdateWithoutItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10222,6 +12042,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     shopId?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10232,6 +12053,7 @@ export namespace Prisma {
   export type LoadCreateManyUserInput = {
     id?: string
     shopId: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -10254,8 +12076,20 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type ClothTypeCreateManyUserInput = {
+    id?: string
+    name: string
+    ironRate?: number
+    washRate?: number
+    dryCleanRate?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type LoadUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10268,6 +12102,7 @@ export namespace Prisma {
   export type LoadUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     shopId?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10279,6 +12114,7 @@ export namespace Prisma {
   export type LoadUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     shopId?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10333,9 +12169,43 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ClothTypeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ironRate?: FloatFieldUpdateOperationsInput | number
+    washRate?: FloatFieldUpdateOperationsInput | number
+    dryCleanRate?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClothTypeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ironRate?: FloatFieldUpdateOperationsInput | number
+    washRate?: FloatFieldUpdateOperationsInput | number
+    dryCleanRate?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClothTypeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ironRate?: FloatFieldUpdateOperationsInput | number
+    washRate?: FloatFieldUpdateOperationsInput | number
+    dryCleanRate?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type LoadCreateManyShopInput = {
     id?: string
     userId: string
+    loadType?: $Enums.LoadType
     pickupDate: Date | string
     isDelivered?: boolean
     deliveredAt?: Date | string | null
@@ -10345,6 +12215,7 @@ export namespace Prisma {
 
   export type LoadUpdateWithoutShopInput = {
     id?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10357,6 +12228,7 @@ export namespace Prisma {
   export type LoadUncheckedUpdateWithoutShopInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10368,6 +12240,7 @@ export namespace Prisma {
   export type LoadUncheckedUpdateManyWithoutShopInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    loadType?: EnumLoadTypeFieldUpdateOperationsInput | $Enums.LoadType
     pickupDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isDelivered?: BoolFieldUpdateOperationsInput | boolean
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

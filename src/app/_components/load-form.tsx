@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Select } from "~/app/_components/ui/select";
 import { api } from "~/trpc/react";
 
 interface LoadItem {
@@ -17,13 +18,19 @@ interface LoadFormProps {
 
 export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
   const [shopId, setShopId] = useState("");
-  const [pickupDate, setPickupDate] = useState("");
+  const [loadType, setLoadType] = useState<"IRON" | "WASH" | "DRY_CLEAN">(
+    "WASH",
+  );
+  const [pickupDate, setPickupDate] = useState(
+    new Date().toISOString().split("T")[0]!,
+  );
   const [items, setItems] = useState<LoadItem[]>([
-    { clothType: "", rate: 0, count: 1 },
+    { clothType: "", rate: 0, count: 0 },
   ]);
   const [error, setError] = useState("");
 
   const { data: shops } = api.shop.listActive.useQuery();
+  const { data: clothTypes } = api.clothType.listActive.useQuery();
 
   const { data: existingLoad } = api.load.getById.useQuery(
     { id: loadId! },
@@ -33,6 +40,7 @@ export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
   useEffect(() => {
     if (existingLoad) {
       setShopId(existingLoad.shopId);
+      setLoadType(existingLoad.loadType);
       setPickupDate(
         new Date(existingLoad.pickupDate).toISOString().split("T")[0]!,
       );
@@ -85,6 +93,7 @@ export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
 
     const data = {
       shopId,
+      loadType,
       pickupDate: new Date(pickupDate),
       items: validItems,
     };
@@ -97,7 +106,7 @@ export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
   };
 
   const addItem = () => {
-    setItems([...items, { clothType: "", rate: 0, count: 1 }]);
+    setItems([...items, { clothType: "", rate: 0, count: 0 }]);
   };
 
   const removeItem = (index: number) => {
@@ -113,6 +122,20 @@ export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
   ) => {
     const newItems = [...items];
     newItems[index] = { ...newItems[index]!, [field]: value };
+
+    if (field === "clothType" && typeof value === "string" && clothTypes) {
+      const selectedType = clothTypes.find((ct) => ct.name === value);
+      if (selectedType && newItems[index].rate === 0) {
+        const rate =
+          loadType === "IRON"
+            ? selectedType.ironRate
+            : loadType === "WASH"
+              ? selectedType.washRate
+              : selectedType.dryCleanRate;
+        newItems[index] = { ...newItems[index], rate };
+      }
+    }
+
     setItems(newItems);
   };
 
@@ -135,10 +158,10 @@ export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
             <label className="mb-1 block text-sm font-medium text-slate-700">
               Shop
             </label>
-            <select
+            <Select
               value={shopId}
               onChange={(e) => setShopId(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              className="w-full"
               required
             >
               <option value="">Select a shop</option>
@@ -147,7 +170,7 @@ export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
                   {shop.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">
@@ -165,63 +188,113 @@ export function LoadForm({ loadId, onSaved, onCancel }: LoadFormProps) {
 
         <div className="mb-4">
           <label className="mb-2 block text-sm font-medium text-slate-700">
+            Load Type
+          </label>
+          <div className="flex gap-4">
+            {(["WASH", "IRON", "DRY_CLEAN"] as const).map((type) => (
+              <label
+                key={type}
+                className="flex cursor-pointer items-center gap-2"
+              >
+                <input
+                  type="radio"
+                  name="loadType"
+                  value={type}
+                  checked={loadType === type}
+                  onChange={() => setLoadType(type)}
+                  className="h-4 w-4 border-slate-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-slate-700">
+                  {type === "DRY_CLEAN"
+                    ? "Dry Clean"
+                    : type.charAt(0) + type.slice(1).toLowerCase()}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="mb-2 block text-sm font-medium text-slate-700">
             Items
           </label>
 
           <div className="space-y-3">
             {items.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 rounded-lg bg-slate-50 p-3"
-              >
-                <input
-                  type="text"
-                  value={item.clothType}
-                  onChange={(e) =>
-                    updateItem(index, "clothType", e.target.value)
-                  }
-                  placeholder="Cloth type (e.g., Shirt)"
-                  className="flex-1 rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800 focus:border-blue-500 focus:outline-none"
-                />
-                <div className="flex items-center gap-1">
-                  <span className="text-sm text-slate-500">₹</span>
-                  <input
-                    type="number"
-                    value={item.rate || ""}
+              <div key={index} className="rounded-lg bg-slate-50 p-3">
+                <div className="mb-2 flex items-center gap-2">
+                  <Select
+                    value={item.clothType}
                     onChange={(e) =>
-                      updateItem(index, "rate", parseFloat(e.target.value) || 0)
+                      updateItem(index, "clothType", e.target.value)
                     }
-                    placeholder="Rate"
-                    className="w-20 rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800 focus:border-blue-500 focus:outline-none"
-                    min="0"
-                    step="0.01"
-                  />
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-sm text-slate-500">×</span>
-                  <input
-                    type="number"
-                    value={item.count || ""}
-                    onChange={(e) =>
-                      updateItem(index, "count", parseInt(e.target.value) || 0)
-                    }
-                    placeholder="Count"
-                    className="w-16 rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800 focus:border-blue-500 focus:outline-none"
-                    min="1"
-                  />
-                </div>
-                <span className="w-20 text-right text-sm font-medium text-slate-700">
-                  ₹{(item.rate * item.count).toFixed(2)}
-                </span>
-                {items.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeItem(index)}
-                    className="text-slate-400 hover:text-red-500"
+                    className="min-w-0 flex-1 rounded px-2 py-1.5 text-sm"
                   >
-                    ✕
-                  </button>
-                )}
+                    <option value="">Select cloth type</option>
+                    {clothTypes?.map((ct) => {
+                      const rate =
+                        loadType === "IRON"
+                          ? ct.ironRate
+                          : loadType === "WASH"
+                            ? ct.washRate
+                            : ct.dryCleanRate;
+                      return (
+                        <option key={ct.id} value={ct.name}>
+                          {ct.name} (₹{rate})
+                        </option>
+                      );
+                    })}
+                  </Select>
+                  {items.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeItem(index)}
+                      className="text-slate-400 hover:text-red-500"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm text-slate-500">₹</span>
+                    <input
+                      type="number"
+                      value={item.rate || ""}
+                      onChange={(e) =>
+                        updateItem(
+                          index,
+                          "rate",
+                          parseFloat(e.target.value) || 0,
+                        )
+                      }
+                      placeholder="Rate"
+                      className="w-20 rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800 focus:border-blue-500 focus:outline-none"
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm text-slate-500">×</span>
+                    <input
+                      type="number"
+                      value={item.count || ""}
+                      onChange={(e) =>
+                        updateItem(
+                          index,
+                          "count",
+                          parseInt(e.target.value) || 0,
+                        )
+                      }
+                      placeholder="Qty"
+                      className="w-16 rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800 focus:border-blue-500 focus:outline-none"
+                      min="1"
+                    />
+                  </div>
+                  <span className="ml-auto text-sm font-medium text-slate-700">
+                    = ₹{(item.rate * item.count).toFixed(2)}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
